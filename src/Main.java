@@ -13,3 +13,11 @@ public class Main {
         }
     }
 }
+/*
+* ArrayList and DefaultListModel: The tasks list stores the tasks, while taskListModel manages the data for the GUI. The taskList component displays the tasks.
+
+createAndShowGUI(): This method builds the graphical interface of the to-do list. It uses Swing components such as JFrame, JTextField, JButton, and JList to create the window, input field, and task list display.
+
+ActionListener: When the user clicks the "Add Task" button, the ActionListener is triggered. It retrieves the text from the input field, adds the task to the list, and updates the GUI.
+
+Main Method: This method is the entry point of the application. It uses SwingUtilities.invokeLater() to ensure the GUI is created on the correct thread.*/
