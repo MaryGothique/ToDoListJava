@@ -1,84 +1,60 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import javax.swing.*; // Used to bring in Swing components (JFrame, JButton, JTextField, etc.) for building the GUI
+import java.awt.*; // AWT classes used for layouts and GUI components
+import java.awt.event.ActionEvent; // ActionEvent class used to handle events like button clicks
+import java.awt.event.ActionListener; // ActionListener interface to handle button click events
+import java.util.ArrayList; // ArrayList class to dynamically store a list of tasks
 
-public class ToDoListApp {
-    // List to store the tasks
-    private ArrayList<String> tasks;
-    // Model that manages the list of tasks for the GUI
-    private DefaultListModel<String> taskListModel;
-    // JList is the visual component that displays the tasks
-    private JList<String> taskList;
-    // JTextField where the user types a new task
-    private JTextField taskInput;
+public class ToDoListApp { // Defines the ToDoListApp class that contains the application logic and user interface
+    private ArrayList<String> tasks; // An ArrayList to store tasks as a resizable list of String objects
+    private DefaultListModel<String> taskListModel; // Model for the JList to manage task data (Model in MVC)
+    private JList<String> taskList; // A component to display the list of tasks visually to the user
+    private JTextField taskInput; // A text field where users can type in tasks
 
-    // Constructor to initialize the task list and the list model
-    public ToDoListApp() {
-        tasks = new ArrayList<>();
-        taskListModel = new DefaultListModel<>();
-        taskList = new JList<>(taskListModel);
+    public ToDoListApp() { // Constructor to initialize the task list and model
+        tasks = new ArrayList<>(); // Initialize an ArrayList to hold the tasks
+        taskListModel = new DefaultListModel<>(); // Initialize the DefaultListModel to manage task data for JList
+        taskList = new JList<>(taskListModel); // Link the list model to the taskList (JList) component for display
     }
 
-    // Method to create the GUI and make it visible
-    public void createAndShowGUI() {
-        // Create the main window frame with the title "To-Do List"
-        JFrame frame = new JFrame("To-Do List");
-        // Set the behavior to exit the program when the window is closed
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Set the size of the window
-        frame.setSize(400, 300);
-        // Use a BorderLayout to arrange components
-        frame.setLayout(new BorderLayout());
+    public void createAndShowGUI() { // Method to set up and display the graphical user interface (GUI)
+        JFrame frame = new JFrame("To-Do List"); // Create the main window (JFrame) with title "To-Do List"
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Set the close operation to exit the program
+        frame.setSize(400, 300); // Set the window size to 400x300 pixels
+        frame.setLayout(new BorderLayout()); // Use a BorderLayout to position components in the window
 
-        // Create a text field for user input
-        taskInput = new JTextField();
-        // Create a button labeled "Add Task"
-        JButton addButton = new JButton("Add Task");
+        taskInput = new JTextField(); // Create the text field where the user types tasks
+        JButton addButton = new JButton("Add Task"); // Create the "Add Task" button
 
-        // Define the action that happens when the add button is clicked
+        // Add an ActionListener to the "Add Task" button that defines the behavior when it's clicked
         addButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // Get the task from the text input
-                String task = taskInput.getText();
-                // If the task is not empty, add it to the list
-                if (!task.isEmpty()) {
-                    tasks.add(task);
-                    // Add the task to the list model, which will update the GUI
-                    taskListModel.addElement(task);
-                    // Clear the input field after adding the task
-                    taskInput.setText("");
+            public void actionPerformed(ActionEvent e) { // The method to handle the button click (ActionEvent)
+                String task = taskInput.getText(); // Get the text input by the user
+                if (!task.isEmpty()) { // Check if the input is not empty
+                    tasks.add(task); // Add the task to the ArrayList of tasks
+                    taskListModel.addElement(task); // Add the task to the DefaultListModel (updates JList)
+                    taskInput.setText(""); // Clear the input field after the task is added
                 }
             }
         });
 
-        // Create a panel to hold the text input and the add button
+        // Create a panel to hold the text input field and "Add Task" button
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BorderLayout());
-        // Add the text input to the center of the panel
-        inputPanel.add(taskInput, BorderLayout.CENTER);
-        // Add the add button to the right side of the panel
-        inputPanel.add(addButton, BorderLayout.EAST);
+        inputPanel.setLayout(new BorderLayout()); // Use BorderLayout to position input and button
+        inputPanel.add(taskInput, BorderLayout.CENTER); // Add text input in the center
+        inputPanel.add(addButton, BorderLayout.EAST); // Add the "Add Task" button to the right (east)
 
-        // Add the input panel to the top of the frame
-        frame.add(inputPanel, BorderLayout.NORTH);
-        // Add the task list (inside a scroll pane) to the center of the frame
-        frame.add(new JScrollPane(taskList), BorderLayout.CENTER);
+        frame.add(inputPanel, BorderLayout.NORTH); // Add the input panel to the top of the window
+        frame.add(new JScrollPane(taskList), BorderLayout.CENTER); // Add the scrollable task list to the center
 
-        // Make the frame visible
-        frame.setVisible(true);
+        frame.setVisible(true); // Make the window visible to the user
     }
 
-    // Main method to start the application
-    public static void main(String[] args) {
-        // Use the SwingUtilities.invokeLater to ensure that the GUI is created
-        // on the event-dispatching thread (best practice for Swing)
+    public static void main(String[] args) { // Main method where the program starts
+        // Use SwingUtilities.invokeLater to ensure the GUI is created on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
-            ToDoListApp app = new ToDoListApp();
-            // Call the method to create and show the GUI
-            app.createAndShowGUI();
+            ToDoListApp app = new ToDoListApp(); // Create an instance of the ToDoListApp class
+            app.createAndShowGUI(); // Set up and display the GUI
         });
     }
 }
